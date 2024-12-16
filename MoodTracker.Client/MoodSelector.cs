@@ -11,15 +11,13 @@
     {
         private List<Mood>? _moods;
         private Mood? _currentMood;
+        private RectangleF _text;
+        private RectangleF _circle;
+        private RectangleF _handle;
+        private RectangleF _image;
         private Vector2 _mouse;
         private Vector2 _direction;
-        private Vector2 _center;
-        private float _padding;
-        private RectangleF _handle;
-        private float _radius;
         private bool _isDragging;
-
-        public Mood? CurrentMood => _currentMood;
 
         public List<Mood>? Moods
         {
@@ -34,29 +32,13 @@
             }
         }
 
+        public Mood? CurrentMood => _currentMood;
+
         public MoodSelector()
         {
             MinimumSize = new Size(200, 200);
             DoubleBuffered = true;
-        }
-
-        protected override void OnPaint(PaintEventArgs e)
-        {
-            _padding = Width / 4f;
-            _radius = (Width - _padding) / 2;
-            _center = new Vector2(Width, Width + _padding / 2) / 2f;
-            if (_mouse == Vector2.Zero)
-                _direction = new Vector2(1, 0);
-            else
-                _direction = Vector2.Normalize(_mouse - _center);
-
-            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-            e.Graphics.CompositingQuality = CompositingQuality.HighQuality;
-
-            PaintCircle(e.Graphics);
-            PaintHandle(e.Graphics);
-            PaintImage(e.Graphics);
-            PaintText(e.Graphics);
+            _moods = new();
         }
 
         protected override void OnResize(EventArgs e)
@@ -84,87 +66,100 @@
             _isDragging = false;
         }
 
-        private void PaintCircle(Graphics graphics)
+        protected override void OnPaint(PaintEventArgs e)
+        {
+            e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            e.Graphics.CompositingQuality = CompositingQuality.HighQuality;
+
+            CalculateRects();
+            PaintRects(e.Graphics);
+        }
+
+        private void CalculateRects()
+        {
+            var padding = Height / 7f;
+
+            var textSize = new SizeF(Width * 0.9f, Height * 0.1f);
+            var textPoint = new PointF(Width / 2f - textSize.Width / 2f, 0);
+            _text = new RectangleF(textPoint, textSize);
+
+            var circleSize = new SizeF(Width * 0.9f - padding, Height * 0.9f - padding);
+            var circlePoint = new PointF(Width / 2f - textSize.Width / 2f + padding / 2, textSize.Height + padding / 2);
+            _circle = new RectangleF(circlePoint, circleSize);
+
+            _direction = new Vector2(1, 0);
+            if (_mouse != Vector2.Zero)
+                _direction = Vector2.Normalize(_mouse - (circlePoint + circleSize / 2).ToVector2());
+
+            var point = circlePoint.ToVector2() + circleSize.ToVector2() / 2 + _direction * circleSize.Width / 2;
+            var handleSize = new SizeF(circleSize.Width / 7, circleSize.Height / 7);
+            var handlePoint = new PointF(point.X - handleSize.Width / 2, point.Y - handleSize.Height / 2);
+            _handle = new RectangleF(handlePoint, handleSize);
+
+            var imageSize = new SizeF(circleSize.Width / 1.5f, circleSize.Height / 1.5f);
+            var imagePoint = new PointF(circlePoint.X + circleSize.Width / 2 - imageSize.Width / 2, circlePoint.Y + circleSize.Height / 2 - imageSize.Height / 2);
+            _image = new RectangleF(imagePoint, imageSize);
+        }
+
+        private void PaintRects(Graphics graphics)
         {
             if (_moods == null)
                 return;
 
-            var size = new SizeF(_radius * 2, _radius * 2);
-            var position = new PointF(_center.X - size.Width / 2, _center.Y - size.Width / 2);
-            var pen = new Pen(Color.Black, Width / 16f);
-            var rect = new RectangleF(position, size);
-
+            var circleWidth = Width / 20f;
+            var circlePen = new Pen(Color.Black, circleWidth);
             if (_moods.Count == 0)
-                graphics.DrawEllipse(pen, rect);
+                graphics.DrawEllipse(circlePen, _circle);
             else
             {
                 var length = 360 / _moods.Count;
                 for (int i = 0; i < _moods.Count; i++)
                 {
-                    pen.Color = _moods[i].Color;
-                    graphics.DrawArc(pen, rect, i * length, length);
+                    circlePen.Color = _moods[i].Color;
+                    graphics.DrawArc(circlePen, _circle, i * length, length);
                 }
             }
-        }
 
-        private void PaintHandle(Graphics graphics)
-        {
-            if (_isDragging == true || _mouse == Vector2.Zero)
+            var handleBrush = new SolidBrush(Color.White);
+            graphics.FillEllipse(handleBrush, _handle);
+
+            if (_moods.Count == 0)
+                return;
+
+            _currentMood = CalculateMood();
+            if (_currentMood == null)
+                return;
+
+            if (_currentMood.Image != null)
+                graphics.DrawImage(_currentMood.Image, _image);
+
+            var textWidth = Width / 15f;
+            var message = _currentMood.Type.ToString();
+            var font = new Font(Font.Name, textWidth, FontStyle.Bold);
+            var textBrush = new SolidBrush(Color.Black);
+            var format = new StringFormat()
             {
-                var point = _center + _direction * _radius;
-                var size = new SizeF(Size.Width / 8f, Size.Width / 8f);
-                var position = new PointF(point.X - size.Width / 2, point.Y - size.Width / 2);
-                _handle = new RectangleF(position, size);
-            }
-
-            var brush = new SolidBrush(Color.White);
-            graphics.FillEllipse(brush, _handle);
+                Alignment = StringAlignment.Center,
+                LineAlignment = StringAlignment.Center,
+            };
+            graphics.DrawString(message, font, textBrush, _text, format);
         }
 
-        private void PaintImage(Graphics graphics)
+        private Mood? CalculateMood()
         {
             if (_moods == null || _moods.Count == 0)
-                return;
+                return null;
 
             var degrees = MathF.Acos(_direction.X) * 180 / MathF.PI;
             if (float.IsNegative(_direction.Y))
                 degrees = 360 - degrees;
-
             var length = 360 / _moods.Count;
             for (int i = _moods.Count - 1; i >= 0; i--)
             {
                 if (degrees >= i * length)
-                {
-                    _currentMood = _moods[i];
-                    break;
-                }
+                    return _moods[i];
             }
-
-            if (_currentMood != null && _currentMood.Image != null)
-            {
-                var size = new SizeF(Width / 2f, Width / 2f);
-                var position = new PointF(_center.X - size.Width / 2, _center.Y - size.Height / 2);
-                var rect = new RectangleF(position, size);
-                graphics.DrawImage(_currentMood.Image, rect);
-            }
-        }
-
-        private void PaintText(Graphics graphics)
-        {
-            if (_currentMood == null)
-                return;
-
-            var message = _currentMood.Type.ToString();
-            var brush = new SolidBrush(Color.Black);
-            var format = new StringFormat()
-            {
-                Alignment = StringAlignment.Center
-            };
-            var font = new Font(Font.Name, Width / 20, FontStyle.Bold);
-            var size = new SizeF(Width / 3, Width / 9);
-            var position = new PointF(_center.X - size.Width / 2, _padding / 3f - size.Height / 2);
-            var rect = new RectangleF(position, size);
-            graphics.DrawString(message, font, brush, rect, format);
+            return null;
         }
     }
 }
