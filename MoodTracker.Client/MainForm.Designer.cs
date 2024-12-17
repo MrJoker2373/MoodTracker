@@ -66,7 +66,7 @@
             // 
             // moodSelector1
             // 
-            moodSelector1.Location = new Point(305, 118);
+            moodSelector1.Location = new Point(300, 130);
             moodSelector1.MinimumSize = new Size(200, 200);
             moodSelector1.Moods = (List<Mood>)resources.GetObject("moodSelector1.Moods");
             moodSelector1.Name = "moodSelector1";

@@ -24,11 +24,8 @@
             get => _moods;
             set
             {
-                if (value != null)
-                {
-                    _moods = value;
-                    Invalidate();
-                }
+                _moods = value;
+                Invalidate();
             }
         }
 
@@ -38,7 +35,6 @@
         {
             MinimumSize = new Size(200, 200);
             DoubleBuffered = true;
-            _moods = new();
         }
 
         protected override void OnResize(EventArgs e)
@@ -59,11 +55,13 @@
         {
             if (_handle.Contains(e.X, e.Y) == true)
                 _isDragging = true;
+            Invalidate();
         }
 
         protected override void OnMouseUp(MouseEventArgs e)
         {
             _isDragging = false;
+            Invalidate();
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -103,63 +101,55 @@
 
         private void PaintRects(Graphics graphics)
         {
-            if (_moods == null)
-                return;
-
-            var circleWidth = Width / 20f;
-            var circlePen = new Pen(Color.Black, circleWidth);
-            if (_moods.Count == 0)
-                graphics.DrawEllipse(circlePen, _circle);
-            else
-            {
-                var length = 360 / _moods.Count;
-                for (int i = 0; i < _moods.Count; i++)
-                {
-                    circlePen.Color = _moods[i].Color;
-                    graphics.DrawArc(circlePen, _circle, i * length, length);
-                }
-            }
-
-            var handleBrush = new SolidBrush(Color.White);
-            graphics.FillEllipse(handleBrush, _handle);
-
-            if (_moods.Count == 0)
+            if (_moods == null || _moods.Count == 0)
                 return;
 
             _currentMood = CalculateMood();
-            if (_currentMood == null)
-                return;
+
+            using var backFill = new SolidBrush(Color.Black);
+            graphics.FillEllipse(backFill, _circle);
+
+            var length = 360 / _moods.Count;
+            using var circleOutline = new Pen(Color.Black, Width / 14f);
+            using var circleFill = new Pen(Color.Black, Width / 20f);
+            graphics.DrawEllipse(circleOutline, _circle);
+            for (int i = 0; i < _moods.Count; i++)
+            {
+                circleFill.Color = _moods[i].Color;
+                graphics.DrawArc(circleFill, _circle, i * length, length);
+            }
+
+            using var handleOutline = new Pen(Color.Black, Width / 40f);
+            using var handleFill = new SolidBrush(Color.White);
+            graphics.DrawEllipse(handleOutline, _handle);
+            graphics.FillEllipse(handleFill, _handle);
 
             if (_currentMood.Image != null)
                 graphics.DrawImage(_currentMood.Image, _image);
 
-            var textWidth = Width / 15f;
-            var message = _currentMood.Type.ToString();
-            var font = new Font(Font.Name, textWidth, FontStyle.Bold);
-            var textBrush = new SolidBrush(Color.Black);
-            var format = new StringFormat()
-            {
-                Alignment = StringAlignment.Center,
-                LineAlignment = StringAlignment.Center,
-            };
-            graphics.DrawString(message, font, textBrush, _text, format);
+            using var textFont = new Font(Font.Name, Width / 15f, FontStyle.Bold);
+            using var textFill = new SolidBrush(Color.Black);
+            using var textFormat = new StringFormat() { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
+            graphics.DrawString(_currentMood.Type.ToString(), textFont, textFill, _text, textFormat);
         }
 
-        private Mood? CalculateMood()
+        private Mood CalculateMood()
         {
             if (_moods == null || _moods.Count == 0)
-                return null;
+                throw new InvalidOperationException();
 
             var degrees = MathF.Acos(_direction.X) * 180 / MathF.PI;
             if (float.IsNegative(_direction.Y))
                 degrees = 360 - degrees;
+
             var length = 360 / _moods.Count;
             for (int i = _moods.Count - 1; i >= 0; i--)
             {
                 if (degrees >= i * length)
                     return _moods[i];
             }
-            return null;
+
+            throw new InvalidOperationException();
         }
     }
 }
