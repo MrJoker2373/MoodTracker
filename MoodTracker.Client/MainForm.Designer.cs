@@ -29,29 +29,11 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            panel1 = new Panel();
-            panel2 = new Panel();
             label1 = new Label();
             moodSelector1 = new MoodSelector();
+            draggingPanel1 = new DraggingPanel();
+            panel1 = new Panel();
             SuspendLayout();
-            // 
-            // panel1
-            // 
-            panel1.BackColor = Color.FromArgb(28, 34, 36);
-            panel1.Dock = DockStyle.Top;
-            panel1.Location = new Point(0, 0);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(743, 39);
-            panel1.TabIndex = 1;
-            // 
-            // panel2
-            // 
-            panel2.BackColor = Color.FromArgb(58, 71, 74);
-            panel2.Dock = DockStyle.Left;
-            panel2.Location = new Point(0, 39);
-            panel2.Name = "panel2";
-            panel2.Size = new Size(195, 414);
-            panel2.TabIndex = 2;
             // 
             // label1
             // 
@@ -74,16 +56,34 @@
             moodSelector1.TabIndex = 4;
             moodSelector1.Text = "moodSelector1";
             // 
+            // draggingPanel1
+            // 
+            draggingPanel1.BackColor = Color.FromArgb(28, 34, 36);
+            draggingPanel1.Dock = DockStyle.Top;
+            draggingPanel1.Location = new Point(0, 0);
+            draggingPanel1.Name = "draggingPanel1";
+            draggingPanel1.Size = new Size(743, 36);
+            draggingPanel1.TabIndex = 5;
+            // 
+            // panel1
+            // 
+            panel1.BackColor = Color.FromArgb(58, 71, 74);
+            panel1.Dock = DockStyle.Left;
+            panel1.Location = new Point(0, 36);
+            panel1.Name = "panel1";
+            panel1.Size = new Size(181, 417);
+            panel1.TabIndex = 6;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(117, 151, 161);
             ClientSize = new Size(743, 453);
+            Controls.Add(panel1);
+            Controls.Add(draggingPanel1);
             Controls.Add(moodSelector1);
             Controls.Add(label1);
-            Controls.Add(panel2);
-            Controls.Add(panel1);
             FormBorderStyle = FormBorderStyle.None;
             Name = "MainForm";
             StartPosition = FormStartPosition.CenterScreen;
@@ -93,9 +93,9 @@
         }
 
         #endregion
-        private Panel panel1;
-        private Panel panel2;
         private Label label1;
         private MoodSelector moodSelector1;
+        private DraggingPanel draggingPanel1;
+        private Panel panel1;
     }
 }

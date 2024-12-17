@@ -35,11 +35,23 @@
         {
             MinimumSize = new Size(200, 200);
             DoubleBuffered = true;
+            _direction = new Vector2(1, 0);
         }
 
         protected override void OnResize(EventArgs e)
         {
             Height = Width;
+        }
+
+        protected override void OnMouseDown(MouseEventArgs e)
+        {
+            if (_handle.Contains(e.X, e.Y) == true)
+                _isDragging = true;
+        }
+
+        protected override void OnMouseUp(MouseEventArgs e)
+        {
+            _isDragging = false;
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
@@ -49,19 +61,6 @@
                 _mouse = new Vector2(e.X, e.Y);
                 Invalidate();
             }
-        }
-
-        protected override void OnMouseDown(MouseEventArgs e)
-        {
-            if (_handle.Contains(e.X, e.Y) == true)
-                _isDragging = true;
-            Invalidate();
-        }
-
-        protected override void OnMouseUp(MouseEventArgs e)
-        {
-            _isDragging = false;
-            Invalidate();
         }
 
         protected override void OnPaint(PaintEventArgs e)
@@ -85,8 +84,7 @@
             var circlePoint = new PointF(Width / 2f - textSize.Width / 2f + padding / 2, textSize.Height + padding / 2);
             _circle = new RectangleF(circlePoint, circleSize);
 
-            _direction = new Vector2(1, 0);
-            if (_mouse != Vector2.Zero)
+            if (_isDragging == true)
                 _direction = Vector2.Normalize(_mouse - (circlePoint + circleSize / 2).ToVector2());
 
             var point = circlePoint.ToVector2() + circleSize.ToVector2() / 2 + _direction * circleSize.Width / 2;
