@@ -52,7 +52,7 @@
             controlPanel.Location = new Point(0, 0);
             controlPanel.Margin = new Padding(0);
             controlPanel.Name = "controlPanel";
-            controlPanel.Size = new Size(500, 35);
+            controlPanel.Size = new Size(840, 35);
             controlPanel.TabIndex = 0;
             // 
             // minimizeButton
@@ -62,7 +62,7 @@
             minimizeButton.Dock = DockStyle.Right;
             minimizeButton.FlatAppearance.BorderSize = 0;
             minimizeButton.FlatStyle = FlatStyle.Flat;
-            minimizeButton.Location = new Point(395, 0);
+            minimizeButton.Location = new Point(735, 0);
             minimizeButton.Margin = new Padding(0);
             minimizeButton.Name = "minimizeButton";
             minimizeButton.Size = new Size(35, 35);
@@ -77,7 +77,7 @@
             maximizeButton.Dock = DockStyle.Right;
             maximizeButton.FlatAppearance.BorderSize = 0;
             maximizeButton.FlatStyle = FlatStyle.Flat;
-            maximizeButton.Location = new Point(430, 0);
+            maximizeButton.Location = new Point(770, 0);
             maximizeButton.Margin = new Padding(0);
             maximizeButton.Name = "maximizeButton";
             maximizeButton.Size = new Size(35, 35);
@@ -92,7 +92,7 @@
             closeButton.Dock = DockStyle.Right;
             closeButton.FlatAppearance.BorderSize = 0;
             closeButton.FlatStyle = FlatStyle.Flat;
-            closeButton.Location = new Point(465, 0);
+            closeButton.Location = new Point(805, 0);
             closeButton.Margin = new Padding(0);
             closeButton.Name = "closeButton";
             closeButton.Size = new Size(35, 35);
@@ -113,7 +113,7 @@
             trackerButton.Location = new Point(0, 0);
             trackerButton.Margin = new Padding(0);
             trackerButton.Name = "trackerButton";
-            trackerButton.Size = new Size(166, 35);
+            trackerButton.Size = new Size(279, 35);
             trackerButton.TabIndex = 1;
             trackerButton.Text = "Tracker";
             trackerButton.UseVisualStyleBackColor = false;
@@ -128,10 +128,10 @@
             statisticsButton.Font = new Font("Candara", 16F, FontStyle.Bold, GraphicsUnit.Point, 204);
             statisticsButton.ForeColor = Color.FromArgb(40, 40, 40);
             statisticsButton.ImageAlign = ContentAlignment.MiddleRight;
-            statisticsButton.Location = new Point(166, 0);
+            statisticsButton.Location = new Point(279, 0);
             statisticsButton.Margin = new Padding(0);
             statisticsButton.Name = "statisticsButton";
-            statisticsButton.Size = new Size(166, 35);
+            statisticsButton.Size = new Size(280, 35);
             statisticsButton.TabIndex = 2;
             statisticsButton.Text = "Statistics";
             statisticsButton.UseVisualStyleBackColor = false;
@@ -146,25 +146,25 @@
             settingsButton.Font = new Font("Candara", 16F, FontStyle.Bold, GraphicsUnit.Point, 204);
             settingsButton.ForeColor = Color.FromArgb(40, 40, 40);
             settingsButton.ImageAlign = ContentAlignment.MiddleRight;
-            settingsButton.Location = new Point(332, 0);
+            settingsButton.Location = new Point(559, 0);
             settingsButton.Margin = new Padding(0);
             settingsButton.Name = "settingsButton";
-            settingsButton.Size = new Size(168, 35);
+            settingsButton.Size = new Size(281, 35);
             settingsButton.TabIndex = 3;
             settingsButton.Text = "Settings";
             settingsButton.UseVisualStyleBackColor = false;
             // 
             // moodSelector
             // 
-            moodSelector.Anchor = AnchorStyles.None;
+            moodSelector.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             moodSelector.Font = new Font("Candara", 16F, FontStyle.Bold, GraphicsUnit.Point, 204);
             moodSelector.ForeColor = Color.FromArgb(40, 40, 40);
-            moodSelector.Location = new Point(80, 125);
+            moodSelector.Location = new Point(75, 125);
             moodSelector.Margin = new Padding(0);
             moodSelector.MinimumSize = new Size(200, 200);
             moodSelector.Moods = (List<Mood>)resources.GetObject("moodSelector.Moods");
             moodSelector.Name = "moodSelector";
-            moodSelector.Size = new Size(339, 339);
+            moodSelector.Size = new Size(690, 350);
             moodSelector.TabIndex = 4;
             moodSelector.Text = "moodSelector1";
             // 
@@ -184,7 +184,7 @@
             menuPanel.Name = "menuPanel";
             menuPanel.RowCount = 1;
             menuPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            menuPanel.Size = new Size(500, 35);
+            menuPanel.Size = new Size(840, 35);
             menuPanel.TabIndex = 6;
             // 
             // MainForm
@@ -192,7 +192,7 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(235, 235, 235);
-            ClientSize = new Size(500, 500);
+            ClientSize = new Size(840, 500);
             Controls.Add(menuPanel);
             Controls.Add(moodSelector);
             Controls.Add(controlPanel);

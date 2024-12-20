@@ -40,7 +40,6 @@
 
         protected override void OnResize(EventArgs e)
         {
-            Width = Height;
             Invalidate();
         }
 
@@ -77,11 +76,11 @@
         {
             var padding = Height / 7f;
 
-            var textSize = new SizeF(Width * 0.9f, Height * 0.1f);
+            var textSize = new SizeF(Height * 0.9f, Height * 0.1f);
             var textPoint = new PointF(Width / 2f - textSize.Width / 2f, 0);
             _text = new RectangleF(textPoint, textSize);
 
-            var circleSize = new SizeF(Width * 0.9f - padding, Height * 0.9f - padding);
+            var circleSize = new SizeF(Height * 0.9f - padding, Height * 0.9f - padding);
             var circlePoint = new PointF(Width / 2f - textSize.Width / 2f + padding / 2, textSize.Height + padding / 2);
             _circle = new RectangleF(circlePoint, circleSize);
 
@@ -109,8 +108,8 @@
             graphics.FillEllipse(backFill, _circle);
 
             var length = 360 / _moods.Count;
-            using var circleOutline = new Pen(Color.Black, Width / 14f);
-            using var circleFill = new Pen(Color.Black, Width / 20f);
+            using var circleOutline = new Pen(Color.Black, _circle.Height / 10f);
+            using var circleFill = new Pen(Color.Black, _circle.Height / 14f);
             graphics.DrawEllipse(circleOutline, _circle);
             for (int i = 0; i < _moods.Count; i++)
             {
@@ -118,7 +117,7 @@
                 graphics.DrawArc(circleFill, _circle, i * length, length);
             }
 
-            using var handleOutline = new Pen(Color.Black, Width / 40f);
+            using var handleOutline = new Pen(Color.Black, _handle.Height / 5f);
             using var handleFill = new SolidBrush(Color.White);
             graphics.DrawEllipse(handleOutline, _handle);
             graphics.FillEllipse(handleFill, _handle);
@@ -126,7 +125,7 @@
             if (_currentMood.Image != null)
                 graphics.DrawImage(_currentMood.Image, _image);
 
-            using var textFont = new Font(Font.Name, Width / 15f, FontStyle.Bold);
+            using var textFont = new Font(Font.Name, _text.Height / 1.5f, FontStyle.Bold);
             using var textFill = new SolidBrush(ForeColor);
             using var textFormat = new StringFormat() { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
             graphics.DrawString(_currentMood.Type.ToString(), textFont, textFill, _text, textFormat);
