@@ -40,7 +40,8 @@
 
         protected override void OnResize(EventArgs e)
         {
-            Height = Width;
+            Width = Height;
+            Invalidate();
         }
 
         protected override void OnMouseDown(MouseEventArgs e)

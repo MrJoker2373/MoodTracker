@@ -23,7 +23,7 @@
             if (_isDragging == true)
             {
                 var root = FindForm();
-                if (root != null)
+                if (root != null && root.WindowState == FormWindowState.Normal)
                 {
                     var point = PointToScreen(e.Location);
                     root.Location = new Point(point.X - _startPosition.X, point.Y - _startPosition.Y);
