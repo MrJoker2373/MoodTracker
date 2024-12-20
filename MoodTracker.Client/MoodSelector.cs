@@ -126,7 +126,7 @@
                 graphics.DrawImage(_currentMood.Image, _image);
 
             using var textFont = new Font(Font.Name, Width / 15f, FontStyle.Bold);
-            using var textFill = new SolidBrush(Color.Black);
+            using var textFill = new SolidBrush(ForeColor);
             using var textFormat = new StringFormat() { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
             graphics.DrawString(_currentMood.Type.ToString(), textFont, textFill, _text, textFormat);
         }

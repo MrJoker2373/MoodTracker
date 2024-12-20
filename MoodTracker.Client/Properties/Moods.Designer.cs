@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace MoodTracker.Client.Resources {
+namespace MoodTracker.Client.Properties {
     using System;
     
     
@@ -39,7 +39,7 @@ namespace MoodTracker.Client.Resources {
         internal static global::System.Resources.ResourceManager ResourceManager {
             get {
                 if (object.ReferenceEquals(resourceMan, null)) {
-                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MoodTracker.Client.Resources.Moods", typeof(Moods).Assembly);
+                    global::System.Resources.ResourceManager temp = new global::System.Resources.ResourceManager("MoodTracker.Client.Properties.Moods", typeof(Moods).Assembly);
                     resourceMan = temp;
                 }
                 return resourceMan;

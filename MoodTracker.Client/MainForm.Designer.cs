@@ -29,73 +29,164 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            label1 = new Label();
-            moodSelector1 = new MoodSelector();
-            draggingPanel1 = new DraggingPanel();
-            panel1 = new Panel();
+            controlPanel = new DraggingPanel();
+            minimizeButton = new Button();
+            maximizeButton = new Button();
+            closeButton = new Button();
+            trackerButton = new Button();
+            statisticsButton = new Button();
+            settingsButton = new Button();
+            moodSelector = new MoodSelector();
+            controlPanel.SuspendLayout();
             SuspendLayout();
             // 
-            // label1
+            // controlPanel
             // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Segoe UI", 32F, FontStyle.Bold);
-            label1.Location = new Point(253, 59);
-            label1.Name = "label1";
-            label1.Size = new Size(420, 59);
-            label1.TabIndex = 3;
-            label1.Text = "Choose your mood!";
-            label1.TextAlign = ContentAlignment.MiddleCenter;
+            controlPanel.BackColor = Color.FromArgb(161, 11, 54);
+            controlPanel.Controls.Add(minimizeButton);
+            controlPanel.Controls.Add(maximizeButton);
+            controlPanel.Controls.Add(closeButton);
+            controlPanel.Dock = DockStyle.Top;
+            controlPanel.Location = new Point(0, 0);
+            controlPanel.Margin = new Padding(0);
+            controlPanel.Name = "controlPanel";
+            controlPanel.Size = new Size(750, 35);
+            controlPanel.TabIndex = 0;
             // 
-            // moodSelector1
+            // minimizeButton
             // 
-            moodSelector1.Location = new Point(300, 130);
-            moodSelector1.MinimumSize = new Size(200, 200);
-            moodSelector1.Moods = (List<Mood>)resources.GetObject("moodSelector1.Moods");
-            moodSelector1.Name = "moodSelector1";
-            moodSelector1.Size = new Size(323, 323);
-            moodSelector1.TabIndex = 4;
-            moodSelector1.Text = "moodSelector1";
+            minimizeButton.BackgroundImage = Properties.Icons.Minimize;
+            minimizeButton.BackgroundImageLayout = ImageLayout.Zoom;
+            minimizeButton.Dock = DockStyle.Right;
+            minimizeButton.FlatAppearance.BorderSize = 0;
+            minimizeButton.FlatStyle = FlatStyle.Flat;
+            minimizeButton.Location = new Point(645, 0);
+            minimizeButton.Margin = new Padding(0);
+            minimizeButton.Name = "minimizeButton";
+            minimizeButton.Size = new Size(35, 35);
+            minimizeButton.TabIndex = 2;
+            minimizeButton.UseVisualStyleBackColor = true;
             // 
-            // draggingPanel1
+            // maximizeButton
             // 
-            draggingPanel1.BackColor = Color.FromArgb(28, 34, 36);
-            draggingPanel1.Dock = DockStyle.Top;
-            draggingPanel1.Location = new Point(0, 0);
-            draggingPanel1.Name = "draggingPanel1";
-            draggingPanel1.Size = new Size(743, 36);
-            draggingPanel1.TabIndex = 5;
+            maximizeButton.BackgroundImage = Properties.Icons.Maximize;
+            maximizeButton.BackgroundImageLayout = ImageLayout.Zoom;
+            maximizeButton.Dock = DockStyle.Right;
+            maximizeButton.FlatAppearance.BorderSize = 0;
+            maximizeButton.FlatStyle = FlatStyle.Flat;
+            maximizeButton.Location = new Point(680, 0);
+            maximizeButton.Margin = new Padding(0);
+            maximizeButton.Name = "maximizeButton";
+            maximizeButton.Size = new Size(35, 35);
+            maximizeButton.TabIndex = 1;
+            maximizeButton.UseVisualStyleBackColor = true;
             // 
-            // panel1
+            // closeButton
             // 
-            panel1.BackColor = Color.FromArgb(58, 71, 74);
-            panel1.Dock = DockStyle.Left;
-            panel1.Location = new Point(0, 36);
-            panel1.Name = "panel1";
-            panel1.Size = new Size(181, 417);
-            panel1.TabIndex = 6;
+            closeButton.BackgroundImage = Properties.Icons.Close;
+            closeButton.BackgroundImageLayout = ImageLayout.Zoom;
+            closeButton.Dock = DockStyle.Right;
+            closeButton.FlatAppearance.BorderSize = 0;
+            closeButton.FlatStyle = FlatStyle.Flat;
+            closeButton.Location = new Point(715, 0);
+            closeButton.Margin = new Padding(0);
+            closeButton.Name = "closeButton";
+            closeButton.Size = new Size(35, 35);
+            closeButton.TabIndex = 0;
+            closeButton.UseVisualStyleBackColor = true;
+            // 
+            // trackerButton
+            // 
+            trackerButton.BackColor = Color.FromArgb(227, 14, 74);
+            trackerButton.BackgroundImageLayout = ImageLayout.Zoom;
+            trackerButton.FlatAppearance.BorderSize = 0;
+            trackerButton.FlatStyle = FlatStyle.Flat;
+            trackerButton.Font = new Font("Candara", 16F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            trackerButton.ForeColor = Color.FromArgb(40, 40, 40);
+            trackerButton.ImageAlign = ContentAlignment.MiddleRight;
+            trackerButton.Location = new Point(0, 35);
+            trackerButton.Margin = new Padding(0);
+            trackerButton.Name = "trackerButton";
+            trackerButton.Size = new Size(250, 35);
+            trackerButton.TabIndex = 1;
+            trackerButton.Text = "Tracker";
+            trackerButton.UseVisualStyleBackColor = false;
+            // 
+            // statisticsButton
+            // 
+            statisticsButton.BackColor = Color.FromArgb(227, 14, 74);
+            statisticsButton.BackgroundImageLayout = ImageLayout.Zoom;
+            statisticsButton.FlatAppearance.BorderSize = 0;
+            statisticsButton.FlatStyle = FlatStyle.Flat;
+            statisticsButton.Font = new Font("Candara", 16F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            statisticsButton.ForeColor = Color.FromArgb(40, 40, 40);
+            statisticsButton.ImageAlign = ContentAlignment.MiddleRight;
+            statisticsButton.Location = new Point(250, 35);
+            statisticsButton.Margin = new Padding(0);
+            statisticsButton.Name = "statisticsButton";
+            statisticsButton.Size = new Size(250, 35);
+            statisticsButton.TabIndex = 2;
+            statisticsButton.Text = "Statistics";
+            statisticsButton.UseVisualStyleBackColor = false;
+            // 
+            // settingsButton
+            // 
+            settingsButton.BackColor = Color.FromArgb(227, 14, 74);
+            settingsButton.BackgroundImageLayout = ImageLayout.Zoom;
+            settingsButton.FlatAppearance.BorderSize = 0;
+            settingsButton.FlatStyle = FlatStyle.Flat;
+            settingsButton.Font = new Font("Candara", 16F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            settingsButton.ForeColor = Color.FromArgb(40, 40, 40);
+            settingsButton.ImageAlign = ContentAlignment.MiddleRight;
+            settingsButton.Location = new Point(500, 35);
+            settingsButton.Margin = new Padding(0);
+            settingsButton.Name = "settingsButton";
+            settingsButton.Size = new Size(250, 35);
+            settingsButton.TabIndex = 3;
+            settingsButton.Text = "Settings";
+            settingsButton.UseVisualStyleBackColor = false;
+            // 
+            // moodSelector
+            // 
+            moodSelector.Font = new Font("Candara", 16F, FontStyle.Bold, GraphicsUnit.Point, 204);
+            moodSelector.ForeColor = Color.FromArgb(40, 40, 40);
+            moodSelector.Location = new Point(188, 114);
+            moodSelector.Margin = new Padding(0);
+            moodSelector.MinimumSize = new Size(200, 200);
+            moodSelector.Moods = (List<Mood>)resources.GetObject("moodSelector.Moods");
+            moodSelector.Name = "moodSelector";
+            moodSelector.Size = new Size(375, 375);
+            moodSelector.TabIndex = 4;
+            moodSelector.Text = "moodSelector1";
             // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            BackColor = Color.FromArgb(117, 151, 161);
-            ClientSize = new Size(743, 453);
-            Controls.Add(panel1);
-            Controls.Add(draggingPanel1);
-            Controls.Add(moodSelector1);
-            Controls.Add(label1);
+            BackColor = Color.FromArgb(235, 235, 235);
+            ClientSize = new Size(750, 500);
+            Controls.Add(moodSelector);
+            Controls.Add(settingsButton);
+            Controls.Add(statisticsButton);
+            Controls.Add(trackerButton);
+            Controls.Add(controlPanel);
             FormBorderStyle = FormBorderStyle.None;
             Name = "MainForm";
             StartPosition = FormStartPosition.CenterScreen;
             Text = "Form1";
+            controlPanel.ResumeLayout(false);
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
-        private Label label1;
-        private MoodSelector moodSelector1;
-        private DraggingPanel draggingPanel1;
-        private Panel panel1;
+
+        private DraggingPanel controlPanel;
+        private Button closeButton;
+        private Button minimizeButton;
+        private Button maximizeButton;
+        private Button trackerButton;
+        private Button statisticsButton;
+        private Button settingsButton;
+        private MoodSelector moodSelector;
     }
 }
