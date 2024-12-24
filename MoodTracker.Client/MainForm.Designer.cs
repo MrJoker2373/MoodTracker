@@ -29,78 +29,15 @@
         private void InitializeComponent()
         {
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainForm));
-            controlPanel = new Panel();
-            minimizeButton = new Button();
-            maximizeButton = new Button();
-            closeButton = new Button();
             headPanel = new TableLayoutPanel();
             trackerButton = new Button();
             settingsButton = new Button();
             statisticsButton = new Button();
             bodyPanel = new Panel();
             moodSelector = new MoodSelector();
-            controlPanel.SuspendLayout();
             headPanel.SuspendLayout();
             bodyPanel.SuspendLayout();
             SuspendLayout();
-            // 
-            // controlPanel
-            // 
-            controlPanel.BackColor = Color.FromArgb(161, 11, 54);
-            controlPanel.Controls.Add(minimizeButton);
-            controlPanel.Controls.Add(maximizeButton);
-            controlPanel.Controls.Add(closeButton);
-            controlPanel.Dock = DockStyle.Top;
-            controlPanel.Location = new Point(2, 2);
-            controlPanel.Name = "controlPanel";
-            controlPanel.Size = new Size(820, 35);
-            controlPanel.TabIndex = 8;
-            controlPanel.MouseDown += controlPanel_MouseDown;
-            // 
-            // minimizeButton
-            // 
-            minimizeButton.BackgroundImage = Properties.Icons.Minimize;
-            minimizeButton.BackgroundImageLayout = ImageLayout.Zoom;
-            minimizeButton.Dock = DockStyle.Right;
-            minimizeButton.FlatAppearance.BorderSize = 0;
-            minimizeButton.FlatStyle = FlatStyle.Flat;
-            minimizeButton.Location = new Point(715, 0);
-            minimizeButton.Margin = new Padding(0);
-            minimizeButton.Name = "minimizeButton";
-            minimizeButton.Size = new Size(35, 35);
-            minimizeButton.TabIndex = 6;
-            minimizeButton.UseVisualStyleBackColor = true;
-            minimizeButton.Click += minimizeButton_Click;
-            // 
-            // maximizeButton
-            // 
-            maximizeButton.BackgroundImage = Properties.Icons.Maximize;
-            maximizeButton.BackgroundImageLayout = ImageLayout.Zoom;
-            maximizeButton.Dock = DockStyle.Right;
-            maximizeButton.FlatAppearance.BorderSize = 0;
-            maximizeButton.FlatStyle = FlatStyle.Flat;
-            maximizeButton.Location = new Point(750, 0);
-            maximizeButton.Margin = new Padding(0);
-            maximizeButton.Name = "maximizeButton";
-            maximizeButton.Size = new Size(35, 35);
-            maximizeButton.TabIndex = 5;
-            maximizeButton.UseVisualStyleBackColor = true;
-            maximizeButton.Click += maximizeButton_Click;
-            // 
-            // closeButton
-            // 
-            closeButton.BackgroundImage = Properties.Icons.Close;
-            closeButton.BackgroundImageLayout = ImageLayout.Zoom;
-            closeButton.Dock = DockStyle.Right;
-            closeButton.FlatAppearance.BorderSize = 0;
-            closeButton.FlatStyle = FlatStyle.Flat;
-            closeButton.Location = new Point(785, 0);
-            closeButton.Margin = new Padding(0);
-            closeButton.Name = "closeButton";
-            closeButton.Size = new Size(35, 35);
-            closeButton.TabIndex = 4;
-            closeButton.UseVisualStyleBackColor = true;
-            closeButton.Click += closeButton_Click;
             // 
             // headPanel
             // 
@@ -113,12 +50,12 @@
             headPanel.Controls.Add(statisticsButton, 1, 0);
             headPanel.Dock = DockStyle.Top;
             headPanel.GrowStyle = TableLayoutPanelGrowStyle.FixedSize;
-            headPanel.Location = new Point(2, 37);
+            headPanel.Location = new Point(0, 0);
             headPanel.Margin = new Padding(0);
             headPanel.Name = "headPanel";
             headPanel.RowCount = 1;
             headPanel.RowStyles.Add(new RowStyle(SizeType.Percent, 100F));
-            headPanel.Size = new Size(820, 45);
+            headPanel.Size = new Size(824, 45);
             headPanel.TabIndex = 9;
             // 
             // trackerButton
@@ -134,7 +71,7 @@
             trackerButton.Location = new Point(0, 0);
             trackerButton.Margin = new Padding(0);
             trackerButton.Name = "trackerButton";
-            trackerButton.Size = new Size(273, 45);
+            trackerButton.Size = new Size(274, 45);
             trackerButton.TabIndex = 1;
             trackerButton.Text = "Tracker";
             trackerButton.UseVisualStyleBackColor = false;
@@ -149,10 +86,10 @@
             settingsButton.Font = new Font("Candara", 16F, FontStyle.Bold, GraphicsUnit.Point, 204);
             settingsButton.ForeColor = Color.FromArgb(40, 40, 40);
             settingsButton.ImageAlign = ContentAlignment.MiddleRight;
-            settingsButton.Location = new Point(546, 0);
+            settingsButton.Location = new Point(548, 0);
             settingsButton.Margin = new Padding(0);
             settingsButton.Name = "settingsButton";
-            settingsButton.Size = new Size(274, 45);
+            settingsButton.Size = new Size(276, 45);
             settingsButton.TabIndex = 3;
             settingsButton.Text = "Settings";
             settingsButton.UseVisualStyleBackColor = false;
@@ -167,10 +104,10 @@
             statisticsButton.Font = new Font("Candara", 16F, FontStyle.Bold, GraphicsUnit.Point, 204);
             statisticsButton.ForeColor = Color.FromArgb(40, 40, 40);
             statisticsButton.ImageAlign = ContentAlignment.MiddleRight;
-            statisticsButton.Location = new Point(273, 0);
+            statisticsButton.Location = new Point(274, 0);
             statisticsButton.Margin = new Padding(0);
             statisticsButton.Name = "statisticsButton";
-            statisticsButton.Size = new Size(273, 45);
+            statisticsButton.Size = new Size(274, 45);
             statisticsButton.TabIndex = 2;
             statisticsButton.Text = "Statistics";
             statisticsButton.UseVisualStyleBackColor = false;
@@ -180,10 +117,10 @@
             bodyPanel.BackColor = Color.FromArgb(225, 225, 225);
             bodyPanel.Controls.Add(moodSelector);
             bodyPanel.Dock = DockStyle.Fill;
-            bodyPanel.Location = new Point(2, 82);
+            bodyPanel.Location = new Point(0, 45);
             bodyPanel.Margin = new Padding(0);
             bodyPanel.Name = "bodyPanel";
-            bodyPanel.Size = new Size(820, 357);
+            bodyPanel.Size = new Size(824, 396);
             bodyPanel.TabIndex = 10;
             // 
             // moodSelector
@@ -196,7 +133,7 @@
             moodSelector.MinimumSize = new Size(200, 200);
             moodSelector.Moods = (List<Mood>)resources.GetObject("moodSelector.Moods");
             moodSelector.Name = "moodSelector";
-            moodSelector.Size = new Size(300, 300);
+            moodSelector.Size = new Size(304, 339);
             moodSelector.TabIndex = 4;
             moodSelector.Text = "moodSelector1";
             // 
@@ -208,29 +145,22 @@
             ClientSize = new Size(824, 441);
             Controls.Add(bodyPanel);
             Controls.Add(headPanel);
-            Controls.Add(controlPanel);
+            DoubleBuffered = true;
             MinimumSize = new Size(840, 480);
             Name = "MainForm";
-            Padding = new Padding(2);
             StartPosition = FormStartPosition.CenterScreen;
-            Text = "MainForm";
-            controlPanel.ResumeLayout(false);
+            Text = "Mood Tracker";
             headPanel.ResumeLayout(false);
             bodyPanel.ResumeLayout(false);
             ResumeLayout(false);
         }
 
         #endregion
-
-        private Panel controlPanel;
         private Button trackerButton;
         private Button statisticsButton;
         private Button settingsButton;
         private TableLayoutPanel headPanel;
         private Panel bodyPanel;
         private MoodSelector moodSelector;
-        private Button minimizeButton;
-        private Button maximizeButton;
-        private Button closeButton;
     }
 }
