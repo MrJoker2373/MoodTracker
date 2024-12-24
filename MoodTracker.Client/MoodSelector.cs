@@ -41,17 +41,20 @@
         protected override void OnResize(EventArgs e)
         {
             Invalidate();
+            base.OnResize(e);
         }
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
             if (_handle.Contains(e.X, e.Y) == true)
                 _isDragging = true;
+            base.OnMouseDown(e);
         }
 
         protected override void OnMouseUp(MouseEventArgs e)
         {
             _isDragging = false;
+            base.OnMouseUp(e);
         }
 
         protected override void OnMouseMove(MouseEventArgs e)
@@ -61,39 +64,42 @@
                 _mouse = new Vector2(e.X, e.Y);
                 Invalidate();
             }
+            base.OnMouseMove(e);
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
             e.Graphics.CompositingQuality = CompositingQuality.HighQuality;
-
             CalculateRects();
             PaintRects(e.Graphics);
+            base.OnPaint(e);
         }
 
         private void CalculateRects()
         {
-            var padding = Height / 7f;
+            var rectMin = MathF.Min(Width, Height);
+            var rectPadding = rectMin / 7f;
+            var rectSize = new SizeF(rectMin, rectMin);
+            var rectPoint = new PointF(Width / 2f - rectMin / 2f, Height / 2f - rectMin / 2f);
 
-            var textSize = new SizeF(Height * 0.9f, Height * 0.1f);
-            var textPoint = new PointF(Width / 2f - textSize.Width / 2f, 0);
-            _text = new RectangleF(textPoint, textSize);
-
-            var circleSize = new SizeF(Height * 0.9f - padding, Height * 0.9f - padding);
-            var circlePoint = new PointF(Width / 2f - textSize.Width / 2f + padding / 2, textSize.Height + padding / 2);
-            _circle = new RectangleF(circlePoint, circleSize);
-
-            if (_isDragging == true)
-                _direction = Vector2.Normalize(_mouse - (circlePoint + circleSize / 2).ToVector2());
-
-            var point = circlePoint.ToVector2() + circleSize.ToVector2() / 2 + _direction * circleSize.Width / 2;
-            var handleSize = new SizeF(circleSize.Width / 7, circleSize.Height / 7);
-            var handlePoint = new PointF(point.X - handleSize.Width / 2, point.Y - handleSize.Height / 2);
-            _handle = new RectangleF(handlePoint, handleSize);
+            var textSize = new SizeF(rectSize.Width * 0.9f - rectPadding, rectSize.Height * 0.1f);
+            var textPoint = new PointF(rectPoint.X + rectSize.Width / 2f - textSize.Width / 2f, rectPoint.Y);
+            var circleSize = new SizeF(rectSize.Width * 0.9f - rectPadding, rectSize.Height * 0.9f - rectPadding);
+            var circlePoint = new PointF(rectPoint.X + rectSize.Width / 2f - circleSize.Width / 2f, textPoint.Y + textSize.Height + rectPadding / 2f);
 
             var imageSize = new SizeF(circleSize.Width / 1.5f, circleSize.Height / 1.5f);
-            var imagePoint = new PointF(circlePoint.X + circleSize.Width / 2 - imageSize.Width / 2, circlePoint.Y + circleSize.Height / 2 - imageSize.Height / 2);
+            var imagePoint = new PointF(circlePoint.X + circleSize.Width / 2f - imageSize.Width / 2f, circlePoint.Y + circleSize.Height / 2f - imageSize.Height / 2f);
+
+            if (_isDragging == true)
+                _direction = Vector2.Normalize(_mouse - (circlePoint + circleSize / 2f).ToVector2());
+            var handleDirection = circlePoint.ToVector2() + circleSize.ToVector2() / 2f + _direction * circleSize.Width / 2f;
+            var handleSize = new SizeF(circleSize.Width / 7f, circleSize.Height / 7f);
+            var handlePoint = new PointF(handleDirection.X - handleSize.Width / 2f, handleDirection.Y - handleSize.Height / 2f);
+
+            _circle = new RectangleF(circlePoint, circleSize);
+            _text = new RectangleF(textPoint, textSize);
+            _handle = new RectangleF(handlePoint, handleSize);
             _image = new RectangleF(imagePoint, imageSize);
         }
 
