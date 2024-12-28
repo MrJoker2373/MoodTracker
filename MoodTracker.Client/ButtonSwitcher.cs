@@ -1,6 +1,6 @@
 ﻿namespace MoodTracker.Client
 {
-    public class ButtonSelector : TableLayoutPanel
+    public class ButtonSwitcher : TableLayoutPanel
     {
         private Button? _currentButton;
         private Color _defaultColor;

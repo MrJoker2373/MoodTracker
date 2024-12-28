@@ -5,10 +5,15 @@ namespace MoodTracker.Client
         public MainForm()
         {
             InitializeComponent();
-            trackerButton.Click += (sender, e) => formFitter.OpenForm(new TrackerForm());
-            statisticsButton.Click += (sender, e) => formFitter.OpenForm(new StatisticsForm());
-            settingsButton.Click += (sender, e) => formFitter.OpenForm(new SettingsForm());
-            formFitter.OpenForm(new TrackerForm());
+            formSwitcher.Initialize(new List<Form>()
+            {
+                new TrackerForm(),
+                new StatisticsForm(),
+                new SettingsForm()
+            });
+            trackerButton.Click += (sender, e) => formSwitcher.OpenForm<TrackerForm>();
+            statisticsButton.Click += (sender, e) => formSwitcher.OpenForm<StatisticsForm>();
+            settingsButton.Click += (sender, e) => formSwitcher.OpenForm<SettingsForm>();
         }
     }
 }
