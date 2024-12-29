@@ -28,18 +28,19 @@
         /// </summary>
         private void InitializeComponent()
         {
-            label1 = new Label();
+            moodCalendar1 = new MoodCalendar();
             SuspendLayout();
             // 
-            // label1
+            // moodCalendar1
             // 
-            label1.AutoSize = true;
-            label1.Font = new Font("Candara", 18F, FontStyle.Bold, GraphicsUnit.Point, 204);
-            label1.Location = new Point(12, 9);
-            label1.Name = "label1";
-            label1.Size = new Size(108, 29);
-            label1.TabIndex = 0;
-            label1.Text = "Statistics";
+            moodCalendar1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            moodCalendar1.Location = new Point(12, 9);
+            moodCalendar1.Margin = new Padding(0);
+            moodCalendar1.MinimumSize = new Size(300, 300);
+            moodCalendar1.Name = "moodCalendar1";
+            moodCalendar1.Size = new Size(819, 382);
+            moodCalendar1.TabIndex = 1;
+            moodCalendar1.Text = "moodCalendar1";
             // 
             // StatisticsForm
             // 
@@ -47,17 +48,15 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(225, 225, 225);
             ClientSize = new Size(840, 400);
-            Controls.Add(label1);
+            Controls.Add(moodCalendar1);
             FormBorderStyle = FormBorderStyle.None;
             MinimumSize = new Size(840, 400);
             Name = "StatisticsForm";
             Text = "StatisticsForm";
             ResumeLayout(false);
-            PerformLayout();
         }
 
         #endregion
-
-        private Label label1;
+        private MoodCalendar moodCalendar1;
     }
 }

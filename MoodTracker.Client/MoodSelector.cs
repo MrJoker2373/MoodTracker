@@ -1,11 +1,7 @@
 ﻿namespace MoodTracker.Client
 {
-    using System;
-    using System.Collections.Generic;
-    using System.Drawing;
     using System.Drawing.Drawing2D;
     using System.Numerics;
-    using System.Windows.Forms;
 
     public class MoodSelector : Control
     {
@@ -33,7 +29,7 @@
 
         public MoodSelector()
         {
-            MinimumSize = new Size(200, 200);
+            MinimumSize = new Size(300, 300);
             DoubleBuffered = true;
             _direction = new Vector2(1, 0);
         }
