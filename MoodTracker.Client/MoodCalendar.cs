@@ -7,13 +7,25 @@
     {
         private const float GROUP_COUNT = 24f;
         private const float ITEM_COUNT = 12f;
-        private List<List<RectangleF>> _squares;
+        private List<RectangleF> _squares;
+        private List<Color> _colors;
+
+        public List<Color> Moods
+        {
+            get => _colors;
+            set
+            {
+                _colors = value;
+                Invalidate();
+            }
+        }
 
         public MoodCalendar()
         {
-            _squares = new();
             DoubleBuffered = true;
             MinimumSize = new Size(300, 300);
+            _squares = new();
+            _colors = new();
         }
 
         protected override void OnResize(EventArgs e)
@@ -42,28 +54,31 @@
             if (currrentRatio > defaultRatio)
                 rectSize = new SizeF(Height * defaultRatio, Height);
             var rectPoint = new PointF(Width / 2f - rectSize.Width / 2f, Height / 2f - rectSize.Height / 2f);
-            
+
             var itemPadding = rectSize.Height / (GROUP_COUNT + ITEM_COUNT);
             var itemSize = (rectSize.Height - itemPadding * (ITEM_COUNT + 1)) / ITEM_COUNT;
             for (int i = 0; i < GROUP_COUNT; i++)
             {
-                var group = new List<RectangleF>();
                 for (int j = 0; j < ITEM_COUNT; j++)
                 {
                     var point = new PointF(rectPoint.X + itemPadding + i * (itemSize + itemPadding), rectPoint.Y + itemPadding + j * (itemSize + itemPadding));
                     var item = new RectangleF(point.X, point.Y, itemSize, itemSize);
-                    group.Add(item);
+                    _squares.Add(item);
                 }
-                _squares.Add(group);
             }
         }
 
         private void PaintRects(Graphics graphics)
         {
-            using var squareFill = new SolidBrush(Color.Green);
-            foreach (var group in _squares)
-                foreach (var item in group)
-                    graphics.FillRectangle(squareFill, item);
+            using var squareFill = new SolidBrush(Color.Black);
+            for (int i = 0; i < _squares.Count; i++)
+            {
+                if (_colors.Count > i)
+                {
+                    squareFill.Color = _colors[i];
+                    graphics.FillRectangle(squareFill, _squares[i]);
+                }
+            }
         }
     }
 }

@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StatisticsForm));
             moodCalendar1 = new MoodCalendar();
             SuspendLayout();
             // 
@@ -37,6 +38,7 @@
             moodCalendar1.Location = new Point(12, 9);
             moodCalendar1.Margin = new Padding(0);
             moodCalendar1.MinimumSize = new Size(300, 300);
+            moodCalendar1.Moods = (List<Color>)resources.GetObject("moodCalendar1.Moods");
             moodCalendar1.Name = "moodCalendar1";
             moodCalendar1.Size = new Size(819, 382);
             moodCalendar1.TabIndex = 1;

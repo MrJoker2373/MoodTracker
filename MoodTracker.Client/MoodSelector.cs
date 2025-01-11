@@ -5,8 +5,7 @@
 
     public class MoodSelector : Control
     {
-        private List<Mood>? _moods;
-        private Mood? _currentMood;
+        private List<Mood> _moods;
         private RectangleF _text;
         private RectangleF _circle;
         private RectangleF _handle;
@@ -15,7 +14,7 @@
         private Vector2 _direction;
         private bool _isDragging;
 
-        public List<Mood>? Moods
+        public List<Mood> Moods
         {
             get => _moods;
             set
@@ -25,12 +24,13 @@
             }
         }
 
-        public Mood? CurrentMood => _currentMood;
+        public Mood? CurrentMood { get; private set; }
 
         public MoodSelector()
         {
             MinimumSize = new Size(300, 300);
             DoubleBuffered = true;
+            _moods = new();
             _direction = new Vector2(1, 0);
         }
 
@@ -101,10 +101,10 @@
 
         private void PaintRects(Graphics graphics)
         {
-            if (_moods == null || _moods.Count == 0)
+            if (_moods.Count == 0)
                 return;
 
-            _currentMood = CalculateMood();
+            CurrentMood = CalculateMood();
 
             using var backFill = new SolidBrush(Color.Black);
             graphics.FillEllipse(backFill, _circle);
@@ -124,18 +124,18 @@
             graphics.DrawEllipse(handleOutline, _handle);
             graphics.FillEllipse(handleFill, _handle);
 
-            if (_currentMood.Image != null)
-                graphics.DrawImage(_currentMood.Image, _image);
+            if (CurrentMood.Image != null)
+                graphics.DrawImage(CurrentMood.Image, _image);
 
             using var textFont = new Font(Font.Name, _text.Height / 1.5f, FontStyle.Bold);
             using var textFill = new SolidBrush(ForeColor);
             using var textFormat = new StringFormat() { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
-            graphics.DrawString(_currentMood.Type.ToString(), textFont, textFill, _text, textFormat);
+            graphics.DrawString(CurrentMood.Type.ToString(), textFont, textFill, _text, textFormat);
         }
 
         private Mood CalculateMood()
         {
-            if (_moods == null || _moods.Count == 0)
+            if (_moods.Count == 0)
                 throw new InvalidOperationException();
 
             var degrees = MathF.Acos(_direction.X) * 180 / MathF.PI;
