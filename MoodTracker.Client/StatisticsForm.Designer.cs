@@ -35,12 +35,12 @@
             // moodCalendar1
             // 
             moodCalendar1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            moodCalendar1.Location = new Point(12, 9);
+            moodCalendar1.Location = new Point(9, 9);
             moodCalendar1.Margin = new Padding(0);
             moodCalendar1.MinimumSize = new Size(300, 300);
-            moodCalendar1.Moods = (List<Color>)resources.GetObject("moodCalendar1.Moods");
+            moodCalendar1.Moods = (List<Mood>)resources.GetObject("moodCalendar1.Moods");
             moodCalendar1.Name = "moodCalendar1";
-            moodCalendar1.Size = new Size(819, 382);
+            moodCalendar1.Size = new Size(806, 378);
             moodCalendar1.TabIndex = 1;
             moodCalendar1.Text = "moodCalendar1";
             // 
@@ -49,10 +49,10 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(225, 225, 225);
-            ClientSize = new Size(840, 400);
+            ClientSize = new Size(824, 396);
             Controls.Add(moodCalendar1);
             FormBorderStyle = FormBorderStyle.None;
-            MinimumSize = new Size(840, 400);
+            MinimumSize = new Size(824, 396);
             Name = "StatisticsForm";
             Text = "StatisticsForm";
             ResumeLayout(false);

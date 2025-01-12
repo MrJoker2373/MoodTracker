@@ -46,10 +46,10 @@
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(225, 225, 225);
-            ClientSize = new Size(840, 400);
+            ClientSize = new Size(824, 396);
             Controls.Add(label1);
             FormBorderStyle = FormBorderStyle.None;
-            MinimumSize = new Size(840, 400);
+            MinimumSize = new Size(824, 396);
             Name = "SettingsForm";
             Text = "SettingsForm";
             ResumeLayout(false);
