@@ -25,12 +25,15 @@
         public void Initialize(IEnumerable<Mood> allMoods, MoodType defaultMood)
         {
             _allMoods = allMoods.Where(mood => mood.Type != MoodType.Null).ToList();
-            SetMood(defaultMood);
+            if (defaultMood == MoodType.Null)
+                SetDirection(new Vector2(1, 0));
+            else
+                SetMood(defaultMood);
         }
 
         public void SetMood(MoodType type)
         {
-            if (_allMoods == null)
+            if (_allMoods == null || type == MoodType.Null)
                 return;
             _currentMood = _allMoods.Single(mood => mood.Type == type);
             MoodChanged?.Invoke(_currentMood.Value.Type);

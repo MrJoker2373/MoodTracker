@@ -20,15 +20,16 @@
             DoubleBuffered = true;
         }
 
-        public void Initialize(IEnumerable<Mood> allMoods, MoodType defaultMood)
+        public void Initialize(IEnumerable<Mood> allMoods, MoodType defaultMood, bool isChecked)
         {
             _allMoods = allMoods.ToList();
             SetMood(defaultMood);
+            _isChecked = isChecked;
         }
 
         public void SetMood(MoodType type)
         {
-            if (_allMoods == null)
+            if (_allMoods == null || type == MoodType.Null)
                 return;
             _currentMood = _allMoods.Single(mood => mood.Type == type);
             Invalidate();

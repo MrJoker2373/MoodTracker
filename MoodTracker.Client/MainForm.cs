@@ -6,6 +6,8 @@ namespace MoodTracker.Client
         {
             InitializeComponent();
 
+            TrackerSaver.Initialize();
+
             var allMoods = new List<Mood>()
             {
                 new (Properties.Icons.Close, Color.Black, MoodType.Null),

@@ -9,9 +9,11 @@
 
         public void Initialize(IEnumerable<Mood> allMoods)
         {
-            toggleButton.Initialize(allMoods, MoodType.Angry);
-            moodSelector.Initialize(allMoods, MoodType.Angry);
+            toggleButton.Checked += (isChecked) => TrackerSaver.IsTrack = isChecked;
+            moodSelector.MoodChanged += (mood) => TrackerSaver.CurrentMood = mood;
             moodSelector.MoodChanged += toggleButton.SetMood;
+            toggleButton.Initialize(allMoods, TrackerSaver.CurrentMood, TrackerSaver.IsTrack);
+            moodSelector.Initialize(allMoods, TrackerSaver.CurrentMood);
         }
     }
 }
