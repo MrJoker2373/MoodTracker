@@ -28,21 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(StatisticsForm));
-            moodCalendar1 = new MoodCalendar();
+            moodCalendar = new MoodCalendar();
             SuspendLayout();
             // 
-            // moodCalendar1
+            // moodCalendar
             // 
-            moodCalendar1.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            moodCalendar1.Location = new Point(9, 9);
-            moodCalendar1.Margin = new Padding(0);
-            moodCalendar1.MinimumSize = new Size(300, 300);
-            moodCalendar1.Moods = (List<Mood>)resources.GetObject("moodCalendar1.Moods");
-            moodCalendar1.Name = "moodCalendar1";
-            moodCalendar1.Size = new Size(806, 378);
-            moodCalendar1.TabIndex = 1;
-            moodCalendar1.Text = "moodCalendar1";
+            moodCalendar.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
+            moodCalendar.Location = new Point(12, 12);
+            moodCalendar.MinimumSize = new Size(300, 300);
+            moodCalendar.Name = "moodCalendar";
+            moodCalendar.Size = new Size(800, 372);
+            moodCalendar.TabIndex = 0;
+            moodCalendar.Text = "moodCalendar1";
             // 
             // StatisticsForm
             // 
@@ -50,7 +47,7 @@
             AutoScaleMode = AutoScaleMode.Font;
             BackColor = Color.FromArgb(225, 225, 225);
             ClientSize = new Size(824, 396);
-            Controls.Add(moodCalendar1);
+            Controls.Add(moodCalendar);
             FormBorderStyle = FormBorderStyle.None;
             MinimumSize = new Size(824, 396);
             Name = "StatisticsForm";
@@ -59,6 +56,7 @@
         }
 
         #endregion
-        private MoodCalendar moodCalendar1;
+
+        private MoodCalendar moodCalendar;
     }
 }

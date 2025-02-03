@@ -1,25 +1,11 @@
 ﻿namespace MoodTracker.Client
 {
-    using System;
     using System.Drawing;
 
-    [Serializable]
-    public class Mood
+    public readonly struct Mood(Image image, Color color, MoodType type)
     {
-        public Image? Image { get; set; }
-        public Color Color { get; set; }
-        public MoodType Type { get; set; }
-
-        public enum MoodType
-        {
-            Calm,
-            Happy,
-            Sad,
-            Angry,
-            Excited,
-            Scared,
-            Shamed,
-            Sick
-        }
+        public readonly Image Image = image;
+        public readonly Color Color = color;
+        public readonly MoodType Type = type;
     }
 }

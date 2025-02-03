@@ -117,15 +117,4 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
-  <data name="moodCalendar1.Moods" mimetype="application/x-microsoft.net.object.binary.base64">
-    <value>
-        AAEAAAD/////AQAAAAAAAAAMAgAAAElNb29kVHJhY2tlci5DbGllbnQsIFZlcnNpb249MS4wLjAuMCwg
-        Q3VsdHVyZT1uZXV0cmFsLCBQdWJsaWNLZXlUb2tlbj1udWxsBAEAAAB2U3lzdGVtLkNvbGxlY3Rpb25z
-        LkdlbmVyaWMuTGlzdGAxW1tNb29kVHJhY2tlci5DbGllbnQuTW9vZCwgTW9vZFRyYWNrZXIuQ2xpZW50
-        LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPW51bGxdXQMAAAAGX2l0ZW1zBV9zaXplCF92
-        ZXJzaW9uBAAAGU1vb2RUcmFja2VyLkNsaWVudC5Nb29kW10CAAAACAgJAwAAAAAAAAAUAAAADAQAAAA4
-        TW9vZFRyYWNrZXIuQ2xpZW50LCBDdWx0dXJlPW5ldXRyYWwsIFB1YmxpY0tleVRva2VuPW51bGwHAwAA
-        AAABAAAABAAAAAQXTW9vZFRyYWNrZXIuQ2xpZW50Lk1vb2QEAAAADQQL
-</value>
-  </data>
 </root>

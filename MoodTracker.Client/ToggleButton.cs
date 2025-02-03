@@ -2,40 +2,36 @@
 {
     using System.Drawing.Drawing2D;
 
-    public class ToggleButton : CheckBox
+    public class ToggleButton : Control
     {
+        private List<Mood>? _allMoods;
+        private Mood? _currentMood;
+
         private RectangleF _text;
         private RectangleF _toggle;
         private RectangleF _handle;
-        private Color _defaultColor;
-        private Color _checkedColor;
+        private bool _isChecked;
 
-        public Color DefaultColor
-        {
-            get => _defaultColor;
-            set
-            {
-                _defaultColor = value;
-                Invalidate();
-            }
-        }
-
-        public Color CheckedColor
-        {
-            get => _checkedColor;
-            set
-            {
-                _checkedColor = value;
-                Invalidate();
-            }
-        }
-
-        public override bool AutoSize { get => base.AutoSize; set => base.AutoSize = false; }
+        public event Action<bool>? Checked;
 
         public ToggleButton()
         {
             MinimumSize = new Size(100, 100);
             DoubleBuffered = true;
+        }
+
+        public void Initialize(IEnumerable<Mood> allMoods, MoodType defaultMood)
+        {
+            _allMoods = allMoods.ToList();
+            SetMood(defaultMood);
+        }
+
+        public void SetMood(MoodType type)
+        {
+            if (_allMoods == null)
+                return;
+            _currentMood = _allMoods.Single(mood => mood.Type == type);
+            Invalidate();
         }
 
         protected override void OnResize(EventArgs e)
@@ -45,20 +41,22 @@
 
         protected override void OnMouseDown(MouseEventArgs e)
         {
-            if(_handle.Contains(e.Location))
-            {
-                Checked = !Checked;
-                Invalidate();
-            }
+            if (_handle.Contains(e.Location) == false)
+                return;
+            _isChecked = !_isChecked;
+            Checked?.Invoke(_isChecked);
+            Invalidate();
         }
 
         protected override void OnPaint(PaintEventArgs e)
         {
+            if (_allMoods == null || _currentMood == null)
+                return;
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
             e.Graphics.CompositingQuality = CompositingQuality.HighQuality;
             e.Graphics.Clear(BackColor);
             CalculateRects();
-            PaintRects(e.Graphics);
+            PaintRects(e.Graphics, _currentMood.Value);
         }
 
         private void CalculateRects()
@@ -71,13 +69,13 @@
             var rectPoint = new PointF(Width / 2f - rectSize.Width / 2f, Height / 2f - rectSize.Height / 2f);
 
             var padding = rectSize.Width / 30f;
-            var textSize = new SizeF(rectSize.Width - padding, rectSize.Height * 0.35f - padding);
+            var textSize = new SizeF(rectSize.Width - padding, rectSize.Height * 0.4f - padding);
             var textPoint = new PointF(rectPoint.X + padding / 2f, rectPoint.Y + padding / 2f);
-            var toggleSize = new SizeF(rectSize.Width - padding, rectSize.Height * 0.65f - padding);
+            var toggleSize = new SizeF(rectSize.Width - padding, rectSize.Height * 0.6f - padding);
             var togglePoint = new PointF(rectPoint.X + padding / 2f, rectPoint.Y + textSize.Height + padding * 1.5f);
             var handleSize = new SizeF(toggleSize.Height, toggleSize.Height);
             var handlePoint = new PointF(togglePoint.X, togglePoint.Y);
-            if (Checked == true)
+            if (_isChecked == true)
                 handlePoint.X = togglePoint.X + toggleSize.Width - toggleSize.Height;
 
             _text = new RectangleF(textPoint, textSize);
@@ -85,12 +83,12 @@
             _handle = new RectangleF(handlePoint, handleSize);
         }
 
-        private void PaintRects(Graphics graphics)
+        private void PaintRects(Graphics graphics, Mood currentMood)
         {
             using var textFill = new SolidBrush(ForeColor);
-            var font = new Font(Font.FontFamily, _text.Width / 15f, Font.Style);
+            var font = new Font(Font.FontFamily, _text.Width / 18f, FontStyle.Bold);
             var format = new StringFormat() { Alignment = StringAlignment.Center, LineAlignment = StringAlignment.Center };
-            graphics.DrawString(Text, font, textFill, _text, format);
+            graphics.DrawString(currentMood.Type.ToString(), font, textFill, _text, format);
 
             var path = new GraphicsPath();
             path.StartFigure();
@@ -99,9 +97,9 @@
             path.CloseFigure();
 
             using var toggleOutline = new Pen(Color.Black, _toggle.Width / 40f);
-            using var toggleFill = new SolidBrush(DefaultColor);
-            if (Checked == true)
-                toggleFill.Color = CheckedColor;
+            using var toggleFill = new SolidBrush(Color.Black);
+            if (_isChecked == true)
+                toggleFill.Color = currentMood.Color;
             graphics.DrawPath(toggleOutline, path);
             graphics.FillPath(toggleFill, path);
 

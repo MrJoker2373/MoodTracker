@@ -6,5 +6,12 @@
         {
             InitializeComponent();
         }
+
+        public void Initialize(IEnumerable<Mood> allMoods)
+        {
+            toggleButton.Initialize(allMoods, MoodType.Angry);
+            moodSelector.Initialize(allMoods, MoodType.Angry);
+            moodSelector.MoodChanged += toggleButton.SetMood;
+        }
     }
 }

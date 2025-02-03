@@ -1,30 +1,38 @@
 ﻿namespace MoodTracker.Client
 {
+    using System.Drawing;
     using System.Drawing.Drawing2D;
 
     public class MoodCalendar : Control
     {
-        private const float GROUP_COUNT = 24f;
-        private const float ITEM_COUNT = 12f;
-        private List<RectangleF> _squares;
-        private List<Mood> _moods;
+        private Dictionary<RectangleF, Mood>? _currentMoods;
+        private List<MoodType>? _currentTypes;
+        private List<Mood>? _allMoods;
 
-        public List<Mood> Moods
-        {
-            get => _moods;
-            set
-            {
-                _moods = value;
-                Invalidate();
-            }
-        }
+        private int _columns;
+        private int _rows;
 
         public MoodCalendar()
         {
             MinimumSize = new Size(300, 300);
             DoubleBuffered = true;
-            _squares = new();
-            _moods = new();
+        }
+
+        public void Initialize(IEnumerable<Mood> allMoods, IEnumerable<MoodType> defaultTypes, int columns, int rows)
+        {
+            _currentMoods = new();
+            _currentTypes = defaultTypes.ToList();
+            _allMoods = allMoods.ToList();
+            _columns = columns;
+            _rows = rows;
+        }
+
+        public void SetMoods(IEnumerable<MoodType> types)
+        {
+            if (_currentMoods == null)
+                return;
+            _currentTypes = types.ToList();
+            Invalidate();
         }
 
         protected override void OnResize(EventArgs e)
@@ -34,47 +42,51 @@
 
         protected override void OnPaint(PaintEventArgs e)
         {
+            if (_currentMoods == null || _currentTypes == null || _allMoods == null)
+                return;
             e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
             e.Graphics.CompositingQuality = CompositingQuality.HighQuality;
             e.Graphics.Clear(BackColor);
-            CalculateRects();
-            PaintRects(e.Graphics);
+            CalculateRects(_currentMoods, _allMoods, _currentTypes);
+            PaintRects(e.Graphics, _currentMoods);
         }
 
-        private void CalculateRects()
+        private void CalculateRects(Dictionary<RectangleF, Mood> currentMoods, List<Mood> allMoods, List<MoodType> currentTypes)
         {
-            _squares.Clear();
-
-            var targetRatio = GROUP_COUNT / ITEM_COUNT;
+            var targetRatio = _columns / _rows;
             var rectRatio = Width / (float)Height;
             var rectSize = new SizeF(Width, Width / targetRatio);
             if (rectRatio > targetRatio)
                 rectSize = new SizeF(Height * targetRatio, Height);
             var rectPoint = new PointF(Width / 2f - rectSize.Width / 2f, Height / 2f - rectSize.Height / 2f);
 
-            var padding = rectSize.Height / ITEM_COUNT / 3f;
-            var itemSize = new SizeF((rectSize.Width - padding) / GROUP_COUNT - padding, (rectSize.Height - padding) / ITEM_COUNT - padding);
-            for (int i = 0; i < GROUP_COUNT; i++)
+            var paddingX = rectSize.Height / _rows / 3f;
+            var paddingY = rectSize.Width / _columns / 3f;
+            var itemSize = new SizeF((rectSize.Width - paddingX) / _columns - paddingX, (rectSize.Height - paddingY) / _rows - paddingY);
+
+            currentMoods.Clear();
+            for (int x = 0; x < _columns; x++)
             {
-                for (int j = 0; j < ITEM_COUNT; j++)
+                for (int y = 0; y < _rows; y++)
                 {
-                    var itemPoint = new PointF(rectPoint.X + padding + i * (itemSize.Width + padding), rectPoint.Y + padding + j * (itemSize.Height + padding));
+                    var itemPoint = new PointF(rectPoint.X + paddingX + x * (itemSize.Width + paddingX), rectPoint.Y + paddingY + y * (itemSize.Height + paddingY));
                     var itemRect = new RectangleF(itemPoint, itemSize);
-                    _squares.Add(itemRect);
+                    var index = y * _columns + x;
+                    var mood = allMoods.Single(mood => mood.Type == MoodType.Null);
+                    if (currentTypes.Count > index)
+                        mood = allMoods.Single(mood => mood.Type == currentTypes[index]);
+                    currentMoods.Add(itemRect, mood);
                 }
             }
         }
 
-        private void PaintRects(Graphics graphics)
+        private void PaintRects(Graphics graphics, Dictionary<RectangleF, Mood> currentMoods)
         {
-            using var squareFill = new SolidBrush(Color.Blue);
-            for (int i = 0; i < _squares.Count; i++)
+            using var squareFill = new SolidBrush(Color.Black);
+            foreach (var mood in currentMoods)
             {
-                if (_moods.Count <= i || _moods[i].Color == default)
-                    squareFill.Color = Color.Black;
-                else
-                    squareFill.Color = _moods[i].Color;
-                graphics.FillRectangle(squareFill, _squares[i]);
+                squareFill.Color = mood.Value.Color;
+                graphics.FillRectangle(squareFill, mood.Key);
             }
         }
     }
